@@ -29,12 +29,14 @@ instance Enum PosetOrd where
 
 -- Lexicographic ordering.
 
+instance Semigroup PosetOrd where
+  Comp EQ <> x = x
+  NComp   <> _ = NComp
+  Comp LT <> _ = Comp LT
+  Comp GT <> _ = Comp GT
+
 instance Monoid PosetOrd where
-    mempty = Comp EQ
-    mappend (Comp EQ) x = x
-    mappend NComp _ = NComp
-    mappend (Comp LT) _ = Comp LT
-    mappend (Comp GT) _ = Comp GT
+  mempty = Comp EQ
 
 -- | Internal-use function to convert the ordinary Ordering to ours.
 partialOrder :: Ordering -> PosetOrd
